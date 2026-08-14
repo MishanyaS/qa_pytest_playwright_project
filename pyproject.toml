@@ -31,8 +31,9 @@ dev = [
 where = ["."]
 include = [
     "api*",
+    "models*",
     "pages*",
-    "utils"
+    "utils*"
 ]
 
 [tool.black]
@@ -115,7 +116,7 @@ log_cli_date_format = "%H:%M:%S"
 
 markers = [
     "api: API tests",
-    "ui: Selenium UI tests",
+    "ui: Playwright UI tests",
     "smoke: Smoke tests",
     "regression: Regression tests",
     "integration: Integration tests",
