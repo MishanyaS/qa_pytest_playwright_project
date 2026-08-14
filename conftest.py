@@ -20,9 +20,13 @@ from playwright.sync_api import (
 from pluggy import Result
 
 from api.base_client import BaseClient
+from api.auth_client import AuthClient
+from api.booking_client import BookingClient
 from config import (
     ALLURE_REPORT,
     ALLURE_RESULTS,
+    API_USERNAME,
+    API_PASSWORD,
     BASE_API_URL,
     BASE_UI_URL,
     BROWSER,
@@ -67,6 +71,20 @@ def api_session() -> Generator[httpx.Client, None, None]:
 @pytest.fixture(scope="session")
 def api_client(api_session: httpx.Client) -> BaseClient:
     return BaseClient(api_session)
+
+
+@pytest.fixture(scope="session")
+def auth_client(api_session: httpx.Client) -> AuthClient:
+    return AuthClient(api_session)
+
+@pytest.fixture(scope="session")
+def booking_client(api_session: httpx.Client) -> BookingClient:
+    return BookingClient(api_session)
+
+
+@pytest.fixture(scope="session")
+def auth_token(auth_client: AuthClient) -> str:
+    return auth_client.get_token(username=API_USERNAME, password=API_PASSWORD)
 
 
 @pytest.fixture(scope="session")
