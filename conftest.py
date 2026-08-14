@@ -19,6 +19,7 @@ from playwright.sync_api import (
 )
 from pluggy import Result
 
+from api.base_client import BaseClient
 from config import (
     ALLURE_REPORT,
     ALLURE_RESULTS,
@@ -61,6 +62,11 @@ def api_session() -> Generator[httpx.Client, None, None]:
     yield session
 
     session.close()
+
+
+@pytest.fixture(scope="session")
+def api_client(api_session: httpx.Client) -> BaseClient:
+    return BaseClient(api_session)
 
 
 @pytest.fixture(scope="session")
