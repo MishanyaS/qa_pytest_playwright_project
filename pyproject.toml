@@ -1,0 +1,172 @@
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "qa_pytest_playwright_project"
+version = "0.1.0"
+description = "QA Automation framework using pytest, HTTPX, Playwright, JSON Schema, Faker and Allure"
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+
+dependencies = [
+    "allure-pytest>=2.15,<3.0",
+    "faker>=37,<38",
+    "httpx[cli]>=0.28,<1.0",
+    "jsonschema>=4.25,<5.0",
+    "playwright>=1.54,<2.0",
+    "pytest>=8.4,<9.0",
+    "pytest-cov>=6.2,<7.0",
+    "python-dotenv>=1.1,<2.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "black>=25.1,<26.0",
+    "mypy>=1.17,<2.0",
+    "ruff>=0.12,<1.0"
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = [
+    "api*",
+    "pages*",
+    "utils"
+]
+
+[tool.black]
+line-length = 88
+target-version = ["py312"]
+skip-string-normalization = false
+
+[tool.ruff]
+line-length = 88
+target-version = "py312"
+
+exclude = [
+    ".git",
+    ".venv",
+    "venv",
+    "__pycache__",
+    ".pytest_cache",
+    ".mypy_cache",
+    ".ruff_cache",
+    "allure-results",
+    "allure-report",
+]
+
+[tool.ruff.lint]
+select = [
+    "E",
+    "W",
+    "F",
+    "I",
+    "B",
+    "UP",
+    "SIM",
+]
+
+ignore = [
+    "E501",
+]
+
+[tool.ruff.lint.isort]
+known-first-party = [
+    "api",
+    "models",
+    "pages",
+    "utils"
+]
+
+[tool.pytest.ini_options]
+pythonpath = [
+    ".",
+]
+
+testpaths = [
+    "tests",
+]
+
+python_files = [
+    "test_*.py",
+]
+
+python_classes = [
+    "Test*",
+]
+
+python_functions = [
+    "test_*",
+]
+
+addopts = [
+    "-ra",
+    "--strict-markers",
+    "--tb=short",
+    "--color=yes",
+]
+
+log_cli = true
+log_cli_level = "INFO"
+
+log_cli_format = "%(asctime)s | %(levelname)s | %(message)s"
+log_cli_date_format = "%H:%M:%S"
+
+markers = [
+    "api: API tests",
+    "ui: Selenium UI tests",
+    "smoke: Smoke tests",
+    "regression: Regression tests",
+    "integration: Integration tests",
+]
+
+filterwarnings = [
+    "error",
+]
+
+[tool.coverage.run]
+branch = true
+source = [
+    "api",
+    "pages",
+    "utils",
+]
+
+omit = [
+    "*/__init__.py",
+]
+
+[tool.coverage.report]
+exclude_also = [
+    "if TYPE_CHECKING:",
+    "if __name__ == .__main__.:",
+]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+
+files = [
+    "api",
+    "pages",
+    "utils",
+    "tests",
+]
+
+exclude = [
+    "^\\.venv/",
+    "^\\venv/",
+    "^allure-results/",
+    "^allure-report/",
+]
+
+warn_unused_configs = true
+warn_unused_ignores = true
+warn_redundant_casts = true
+warn_unreachable = true
+disallow_any_generics = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+no_implicit_optional = true
