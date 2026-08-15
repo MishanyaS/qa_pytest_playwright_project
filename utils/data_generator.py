@@ -4,6 +4,7 @@ from faker import Faker
 
 from models.booking import Booking, BookingDates
 
+
 class BookingDataGenerator:
     def __init__(self, faker: Faker) -> None:
         self.faker = faker
@@ -18,8 +19,16 @@ class BookingDataGenerator:
             lastname=self.faker.last_name(),
             totalprice=self.faker.random_int(min=50, max=1000),
             depositpaid=self.faker.boolean(),
-            bookingdates=BookingDates(checkin=checkin.isoformat(), checkout=checkout.isoformat()),
+            bookingdates=BookingDates(
+                checkin=checkin.isoformat(), checkout=checkout.isoformat()
+            ),
             additionalneeds=self.faker.random_element(
-                elements=["Breakfast", "Dinner", "Lunch", "Extra bed", "Airport transfer"]
-            )
+                elements=[
+                    "Breakfast",
+                    "Dinner",
+                    "Lunch",
+                    "Extra bed",
+                    "Airport transfer",
+                ]
+            ),
         )

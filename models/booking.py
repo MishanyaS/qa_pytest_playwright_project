@@ -1,6 +1,7 @@
 from dataclasses import asdict, dataclass
 from typing import Any
 
+
 @dataclass
 class BookingDates:
     checkin: str
@@ -8,6 +9,7 @@ class BookingDates:
 
     def to_dict(self) -> dict[str, str]:
         return asdict(self)
+
 
 @dataclass
 class Booking:

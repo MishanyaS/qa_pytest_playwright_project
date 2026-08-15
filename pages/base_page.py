@@ -1,5 +1,6 @@
 from playwright.sync_api import Locator, Page
 
+
 class BasePage:
     def __init__(self, page: Page):
         self.page = page
@@ -23,4 +24,9 @@ class BasePage:
         return locator.inner_text()
 
     def is_visible(self, locator: Locator) -> bool:
-        return locator.is_visible()
+        try:
+            locator.wait_for(state="visible")
+        except ProcessLookupError:
+            return False
+
+        return True

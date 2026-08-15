@@ -1,7 +1,9 @@
 from typing import Any
+
 import httpx
 
 from api.base_client import BaseClient
+
 
 class AuthClient(BaseClient):
     def create_token(self, username: str, password: str) -> httpx.Response:
@@ -20,4 +22,3 @@ class AuthClient(BaseClient):
         data: dict[str, Any] = response.json()
 
         return str(data["token"])
-    

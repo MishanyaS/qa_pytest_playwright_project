@@ -17,6 +17,7 @@ dependencies = [
     "playwright>=1.54,<2.0",
     "pytest>=8.4,<9.0",
     "pytest-cov>=6.2,<7.0",
+    "pytest-playwright>=0.7,<1.0",
     "python-dotenv>=1.1,<2.0",
 ]
 
@@ -120,6 +121,7 @@ markers = [
     "smoke: Smoke tests",
     "regression: Regression tests",
     "integration: Integration tests",
+    "positive: Positive scenarios",
 ]
 
 filterwarnings = [
