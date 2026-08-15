@@ -19,5 +19,5 @@ class AuthClient(BaseClient):
 
         data: dict[str, Any] = response.json()
 
-        return str[data["token"]]
+        return str(data["token"])
     

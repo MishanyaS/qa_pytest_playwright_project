@@ -40,6 +40,8 @@ from config import (
     VIEWPORT_HEIGHT,
     VIEWPORT_WIDTH,
 )
+from models.booking import Booking
+from utils.data_generator import BookingDataGenerator
 
 DIRECTORIES = (SCREENSHOTS_DIR, LOGS_DIR, DOWNLOADS_DIR, ALLURE_RESULTS, ALLURE_REPORT)
 
@@ -50,6 +52,11 @@ for directory in DIRECTORIES:
 @pytest.fixture(scope="session")
 def faker() -> Faker:
     return Faker(FAKER_LOCALE)
+
+
+@pytest.fixture
+def booking_data(faker: Faker) -> Booking:
+    return BookingDataGenerator(faker).create_booking()
 
 
 @pytest.fixture(scope="session")
