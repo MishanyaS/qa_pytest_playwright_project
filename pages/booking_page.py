@@ -81,4 +81,12 @@ class BookingPage(BasePage):
 
         room_card.wait_for(state="visible")
 
-        room_card.locator("a.btn").click()
+        room_booking_link = room_card.locator("a.btn")
+        room_booking_link.wait_for(state="visible")
+
+        room_booking_link.click(trial=True)
+
+        room_card = self.room_cards.filter(has=self.page.locator("h5", has_text=room_name))
+        room_booking_link = room_card.locator("a.btn")
+
+        room_booking_link.click()

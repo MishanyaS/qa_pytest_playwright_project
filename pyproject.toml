@@ -122,6 +122,7 @@ markers = [
     "regression: Regression tests",
     "integration: Integration tests",
     "positive: Positive scenarios",
+    "negative: Negative scenarios",
 ]
 
 filterwarnings = [
