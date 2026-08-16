@@ -1,0 +1,47 @@
+services:
+  tests:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    
+    container_name: qa_pytest_playwright_tests
+
+    env_file:
+      - .env
+    
+    environment:
+      BROWSER: ${BROWSER:-chromium}
+      HEADLESS: ${HEADLESS:-true}
+      PLAYWRIGHT_TIMEOUT: ${PLAYWRIGHT_TIMEOUT:-10000}
+      VIEWPORT_WIDTH: ${VIEWPORT_WIDTH:-1440}
+      VIEWPORT_HEIGHT: ${VIEWPORT_HEIGHT:-900}
+      FAKER_LOCALE: ${FAKER_LOCALE:-en_US}
+    
+    volumes:
+      - ./allure-results:/app/allure-results
+      - ./allure-report:/app/allure-report
+      - ./screenshots:/app/screenshots
+      - ./downloads:/app/downloads
+      - ./logs:/app/logs
+    
+    healthcheck:
+      test: 
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import pytest; import playwright; import httpx; import allure_pytest; import jsonschema; import faker; print('Test environment is ready')"
+        ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    
+    command: 
+      [
+        "pytest",
+        "-ra",
+        "--strict-markers",
+        "--tb=short",
+        "--color=yes"
+      ]
