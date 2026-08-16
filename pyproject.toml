@@ -14,6 +14,7 @@ dependencies = [
     "faker>=37,<38",
     "httpx[cli]>=0.28,<1.0",
     "jsonschema>=4.25,<5.0",
+    "types-jsonschema>=4.25,<5.0",
     "playwright>=1.54,<2.0",
     "pytest>=8.4,<9.0",
     "pytest-cov>=6.2,<7.0",
@@ -155,12 +156,13 @@ files = [
     "api",
     "pages",
     "utils",
-    "tests",
 ]
 
 exclude = [
+    "^build/",
+    "^tests/",
     "^\\.venv/",
-    "^\\venv/",
+    "^venv/",
     "^allure-results/",
     "^allure-report/",
 ]

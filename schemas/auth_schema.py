@@ -1,4 +1,6 @@
-AUTH_SCHEMA: dict = {
+from typing import Any
+
+AUTH_SCHEMA: dict[str, Any] = {
     "type": "object",
     "required": [
         "token",

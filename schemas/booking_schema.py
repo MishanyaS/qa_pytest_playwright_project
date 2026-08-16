@@ -1,4 +1,6 @@
-BOOKING_ID_LIST_SCHEMA: dict = {
+from typing import Any
+
+BOOKING_ID_LIST_SCHEMA: dict[str, Any] = {
     "type": "array",
     "items": {
         "type": "object",
@@ -15,7 +17,7 @@ BOOKING_ID_LIST_SCHEMA: dict = {
     },
 }
 
-BOOKING_SCHEMA: dict = {
+BOOKING_SCHEMA: dict[str, Any] = {
     "type": "object",
     "required": [
         "firstname",
@@ -66,7 +68,7 @@ BOOKING_SCHEMA: dict = {
     "additionalProperties": True,
 }
 
-BOOKING_RESPONSE_SCHEMA: dict = {
+BOOKING_RESPONSE_SCHEMA: dict[str, Any] = {
     "type": "object",
     "required": [
         "firstname",
@@ -116,7 +118,7 @@ BOOKING_RESPONSE_SCHEMA: dict = {
     "additionalProperties": True,
 }
 
-CREATE_BOOKING_SCHEMA: dict = {
+CREATE_BOOKING_SCHEMA: dict[str, Any] = {
     "type": "object",
     "required": [
         "bookingid",
