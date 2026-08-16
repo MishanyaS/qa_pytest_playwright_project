@@ -4,20 +4,25 @@ from playwright.sync_api import Locator, Page
 
 from pages.base_page import BasePage
 
+
 class LocationPage(BasePage):
     def __init__(self, page: Page):
         super().__init__(page)
 
         self.location_section: Locator = page.locator("#location")
         self.location_title: Locator = page.locator("#location h2")
-        self.location_description: Locator = page.locator("#location > .container > .text-center p")
+        self.location_description: Locator = page.locator(
+            "#location > .container > .text-center p"
+        )
 
         self.map: Locator = page.locator("#location .pigeon-tiles-box")
         self.map_marker: Locator = page.locator("#location .pigeon-click-block")
         self.map_attribution: Locator = page.locator("#location .pigeon-attribution")
 
         self.contact_information: Locator = page.locator("#location .card-body").nth(1)
-        self.contact_information_title: Locator = page.locator("#location .card-body h3")
+        self.contact_information_title: Locator = page.locator(
+            "#location .card-body h3"
+        )
 
         self.address_title: Locator = page.locator("#location .card-body h5").nth(0)
         self.address: Locator = page.locator("#location .card-body p").nth(0)
@@ -29,7 +34,9 @@ class LocationPage(BasePage):
         self.email: Locator = page.locator("#location .card-body p").nth(2)
 
         self.getting_here_title: Locator = page.locator("#location .card-body h4")
-        self.getting_here_description: Locator = page.locator("#location .card-body h4 + p")
+        self.getting_here_description: Locator = page.locator(
+            "#location .card-body h4 + p"
+        )
 
     def open_location(self) -> None:
         self.location_section.wait_for(state="visible")

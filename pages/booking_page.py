@@ -4,6 +4,7 @@ from playwright.sync_api import Locator, Page
 
 from pages.base_page import BasePage
 
+
 class BookingPage(BasePage):
     def __init__(self, page: Page):
         super().__init__(page)
@@ -11,11 +12,17 @@ class BookingPage(BasePage):
         self.booking_section: Locator = page.locator("#booking")
         self.booking_title: Locator = page.locator("#booking h3")
 
-        self.check_in_input: Locator = page.locator("#booking .react-datepicker-wrapper input").nth(0)
-        self.check_out_input: Locator = page.locator("#booking .react-datepicker-wrapper input").nth(1)
+        self.check_in_input: Locator = page.locator(
+            "#booking .react-datepicker-wrapper input"
+        ).nth(0)
+        self.check_out_input: Locator = page.locator(
+            "#booking .react-datepicker-wrapper input"
+        ).nth(1)
         self.check_in_label: Locator = page.locator("#booking label[for='checkin']")
         self.check_out_label: Locator = page.locator("#booking label[for='checkout']")
-        self.check_availability_button: Locator = page.locator("#booking button[type='button']")
+        self.check_availability_button: Locator = page.locator(
+            "#booking button[type='button']"
+        )
 
         self.rooms_section: Locator = page.locator("#rooms")
         self.room_cards: Locator = page.locator("#rooms .room-card")
@@ -77,7 +84,9 @@ class BookingPage(BasePage):
         self.rooms_section.wait_for(state="visible")
 
     def open_room_booking(self, room_name: str) -> None:
-        room_card = self.room_cards.filter(has=self.page.locator("h5", has_text=room_name))
+        room_card = self.room_cards.filter(
+            has=self.page.locator("h5", has_text=room_name)
+        )
 
         room_card.wait_for(state="visible")
 
@@ -86,7 +95,9 @@ class BookingPage(BasePage):
 
         room_booking_link.click(trial=True)
 
-        room_card = self.room_cards.filter(has=self.page.locator("h5", has_text=room_name))
+        room_card = self.room_cards.filter(
+            has=self.page.locator("h5", has_text=room_name)
+        )
         room_booking_link = room_card.locator("a.btn")
 
         room_booking_link.click()

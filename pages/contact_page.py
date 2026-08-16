@@ -4,6 +4,7 @@ from playwright.sync_api import Locator, Page
 
 from pages.base_page import BasePage
 
+
 class ContactPage(BasePage):
     def __init__(self, page: Page):
         super().__init__(page)
@@ -14,8 +15,12 @@ class ContactPage(BasePage):
         self.name_input = page.locator("#contact input[data-testid='ContactName']")
         self.email_input = page.locator("#contact input[data-testid='ContactEmail']")
         self.phone_input = page.locator("#contact input[data-testid='ContactPhone']")
-        self.subject_input = page.locator("#contact input[data-testid='ContactSubject']")
-        self.message_input = page.locator("#contact textarea[data-testid='ContactDescription']")
+        self.subject_input = page.locator(
+            "#contact input[data-testid='ContactSubject']"
+        )
+        self.message_input = page.locator(
+            "#contact textarea[data-testid='ContactDescription']"
+        )
 
         self.submit_button = page.locator("#contact button[type='button']")
 
@@ -71,7 +76,9 @@ class ContactPage(BasePage):
         self.message_input.wait_for(state="visible")
         self.fill(self.message_input, message)
 
-    def fill_contact_form(self, name: str, email: str, phone: str, subject: str, message: str) -> None:
+    def fill_contact_form(
+        self, name: str, email: str, phone: str, subject: str, message: str
+    ) -> None:
         self.fill_name(name)
         self.fill_email(email)
         self.fill_phone(phone)

@@ -7,6 +7,7 @@ from playwright.sync_api import Page
 from pages.booking_page import BookingPage
 from pages.home_page import HomePage
 
+
 @allure.epic("UI Tests")
 @allure.feature("Booking Page")
 @pytest.mark.ui
@@ -14,13 +15,15 @@ from pages.home_page import HomePage
 class TestBookingPage:
     @allure.story("Booking page")
     @allure.title("Booking form is displayed")
-    @allure.description("Verifies that the Booking section is displayed with the booking title, check-in and check-out fields and the Check Availability button.")
+    @allure.description(
+        "Verifies that the Booking section is displayed with the booking title, check-in and check-out fields and the Check Availability button."
+    )
     @pytest.mark.smoke
     @pytest.mark.positive
     def test_booking_form_is_displayed(self, page: Page) -> None:
         home_page = HomePage(page)
         booking_page = BookingPage(page)
-        
+
         with allure.step("Open Home page"):
             home_page.open_home_page()
 
@@ -34,7 +37,10 @@ class TestBookingPage:
             assert booking_page.booking_title_visible()
 
         with allure.step("Verify Booking title"):
-            assert booking_page.get_booking_title() == "Check Availability & Book Your Stay"
+            assert (
+                booking_page.get_booking_title()
+                == "Check Availability & Book Your Stay"
+            )
 
         with allure.step("Verify Check In field is visible"):
             assert booking_page.check_in_visible()
@@ -47,12 +53,14 @@ class TestBookingPage:
 
     @allure.story("Booking dates")
     @allure.title("Default booking dates are displayed")
-    @allure.description("Verifies that the Booking section contains populated Check In and Check Out date fields.")
+    @allure.description(
+        "Verifies that the Booking section contains populated Check In and Check Out date fields."
+    )
     @pytest.mark.positive
     def test_default_booking_dates_are_displayed(self, page: Page) -> None:
         home_page = HomePage(page)
         booking_page = BookingPage(page)
-        
+
         with allure.step("Open Home page"):
             home_page.open_home_page()
 
@@ -76,13 +84,15 @@ class TestBookingPage:
 
     @allure.story("Room availability")
     @allure.title("Available rooms are displayed after checking availability")
-    @allure.description("Verifies that checking availability displays the available rooms with their booking options.")
+    @allure.description(
+        "Verifies that checking availability displays the available rooms with their booking options."
+    )
     @pytest.mark.smoke
     @pytest.mark.positive
     def test_available_rooms_are_displayed(self, page: Page) -> None:
         home_page = HomePage(page)
         booking_page = BookingPage(page)
-        
+
         with allure.step("Open Home page"):
             home_page.open_home_page()
 
@@ -109,12 +119,14 @@ class TestBookingPage:
 
     @allure.story("Room booking")
     @allure.title("Single rooms booking opens successfully")
-    @allure.description("Verifies that the Single room booking link opens the corresponding room reservation page.")
+    @allure.description(
+        "Verifies that the Single room booking link opens the corresponding room reservation page."
+    )
     @pytest.mark.positive
     def test_single_room_booking(self, page: Page) -> None:
         home_page = HomePage(page)
         booking_page = BookingPage(page)
-        
+
         with allure.step("Open Home page"):
             home_page.open_home_page()
 
@@ -135,4 +147,3 @@ class TestBookingPage:
 
         with allure.step("Verify check-out date is present in URL"):
             assert "checkout=" in booking_page.get_url()
-        

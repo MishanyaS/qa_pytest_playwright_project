@@ -7,6 +7,7 @@ from playwright.sync_api import Page
 from pages.contact_page import ContactPage
 from pages.home_page import HomePage
 
+
 @allure.epic("UI Tests")
 @allure.feature("Contact Page")
 @pytest.mark.ui
@@ -14,7 +15,9 @@ from pages.home_page import HomePage
 class TestContactPage:
     @allure.story("Contact page")
     @allure.title("Contact form is displayed")
-    @allure.description("Verifies that the Contact section is displayed with all required form fields and the Submit button.")
+    @allure.description(
+        "Verifies that the Contact section is displayed with all required form fields and the Submit button."
+    )
     @pytest.mark.smoke
     @pytest.mark.positive
     def test_contact_form_is_displayed(self, page: Page) -> None:
@@ -56,7 +59,9 @@ class TestContactPage:
 
     @allure.story("Contact form")
     @allure.title("Contact form accepts valid data")
-    @allure.description("Verifies that valid contact information can be entered into all Contact form fields.")
+    @allure.description(
+        "Verifies that valid contact information can be entered into all Contact form fields."
+    )
     @pytest.mark.positive
     def test_contact_form_accepts_valid_data(self, page: Page) -> None:
         home_page = HomePage(page)
@@ -75,7 +80,9 @@ class TestContactPage:
             home_page.open_contact()
 
         with allure.step("Fill Contact form"):
-            contact_page.fill_contact_form(name=name, email=email, phone=phone, subject=subject, message=message)
+            contact_page.fill_contact_form(
+                name=name, email=email, phone=phone, subject=subject, message=message
+            )
 
         with allure.step("Verify Name value"):
             assert contact_page.get_name_value() == name
@@ -94,7 +101,9 @@ class TestContactPage:
 
     @allure.story("Contact form")
     @allure.title("Contact form can be submitted")
-    @allure.description("Verifies that the Contact form can be submitted after entering valid contact information.")
+    @allure.description(
+        "Verifies that the Contact form can be submitted after entering valid contact information."
+    )
     @pytest.mark.positive
     def test_contact_form_can_be_submitted(self, page: Page) -> None:
         home_page = HomePage(page)
@@ -112,7 +121,7 @@ class TestContactPage:
                 email="john.doe@example.com",
                 phone="01234567890",
                 subject="Booking question",
-                message="I would like to ask about room availability."
+                message="I would like to ask about room availability.",
             )
 
         with allure.step("Submit Contact form"):

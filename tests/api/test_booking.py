@@ -4,10 +4,8 @@ import allure
 import pytest
 from jsonschema import FormatChecker, validate
 
-from api.auth_client import AuthClient
 from api.booking_client import BookingClient
 from models.booking import Booking
-from schemas.auth_schema import AUTH_SCHEMA
 from schemas.booking_schema import (
     BOOKING_ID_LIST_SCHEMA,
     BOOKING_RESPONSE_SCHEMA,
@@ -23,7 +21,9 @@ from utils.response_helpers import get_booking_id_from_create_response
 class TestBookings:
     @allure.story("Booking list")
     @allure.title("Booking IDs are returned successfully")
-    @allure.description("Verifies that the booking list endpoint returns a successful response containing a valid list of booking IDs.")
+    @allure.description(
+        "Verifies that the booking list endpoint returns a successful response containing a valid list of booking IDs."
+    )
     @pytest.mark.smoke
     @pytest.mark.positive
     def test_get_booking_ids(self, booking_client: BookingClient) -> None:
@@ -38,7 +38,9 @@ class TestBookings:
 
     @allure.story("Booking search")
     @allure.title("Bookings can be filtered by firstname")
-    @allure.description("Verifies that bookings can be filtered by firstname and the response has the expected booking ID list structure.")
+    @allure.description(
+        "Verifies that bookings can be filtered by firstname and the response has the expected booking ID list structure."
+    )
     @pytest.mark.parametrize(
         "firstname",
         [
@@ -62,10 +64,14 @@ class TestBookings:
 
     @allure.story("Booking creation")
     @allure.title("Booking is created successfully")
-    @allure.description("Verifies that a booking can be created with valid booking data and the response contains the created booking details.")
+    @allure.description(
+        "Verifies that a booking can be created with valid booking data and the response contains the created booking details."
+    )
     @pytest.mark.smoke
     @pytest.mark.positive
-    def test_create_booking(self, booking_client: BookingClient, booking_data: Booking) -> None:
+    def test_create_booking(
+        self, booking_client: BookingClient, booking_data: Booking
+    ) -> None:
         with allure.step("Create booking"):
             response = booking_client.create_booking(booking_data)
 
@@ -89,7 +95,9 @@ class TestBookings:
 
     @allure.story("Booking retrieval")
     @allure.title("Existing booking can be retrieved by ID")
-    @allure.description("Verifies that an existing booking can be retrieved by its ID and the response matches the booking schema.")
+    @allure.description(
+        "Verifies that an existing booking can be retrieved by its ID and the response matches the booking schema."
+    )
     @pytest.mark.positive
     def test_get_booking(self, booking_client: BookingClient) -> None:
         with allure.step("Get existing booking IDs"):
@@ -127,7 +135,9 @@ class TestBookings:
 
     @allure.story("Booking retrieval")
     @allure.title("Booking can not be retrieved with invalid ID")
-    @allure.description("Verifies that requesting a booking with a non-existing ID returns a 404 response.")
+    @allure.description(
+        "Verifies that requesting a booking with a non-existing ID returns a 404 response."
+    )
     @pytest.mark.negative
     def test_get_booking_with_invalid_id(self, booking_client: BookingClient) -> None:
         invalid_booking_id = 999999999
@@ -140,10 +150,12 @@ class TestBookings:
 
     @allure.story("Booking update")
     @allure.title("Booking can be fully updated")
-    @allure.description("Verifies that an existing booking can be fully updated using a valid authentication token.")
+    @allure.description(
+        "Verifies that an existing booking can be fully updated using a valid authentication token."
+    )
     @pytest.mark.positive
     def test_update_booking(
-        self, 
+        self,
         booking_client: BookingClient,
         booking_data: Booking,
         auth_token: str,
@@ -199,14 +211,18 @@ class TestBookings:
 
             assert response_data["depositpaid"] == (updated_booking.depositpaid)
 
-            assert response_data.get("additionalneeds") == (updated_booking.additionalneeds)
+            assert response_data.get("additionalneeds") == (
+                updated_booking.additionalneeds
+            )
 
     @allure.story("Booking update")
     @allure.title("Booking can be partially updated")
-    @allure.description("Verifies that selected booking fields can be partially updated using a valid authentication token while the remaining fields stay unchanged.")
+    @allure.description(
+        "Verifies that selected booking fields can be partially updated using a valid authentication token while the remaining fields stay unchanged."
+    )
     @pytest.mark.positive
     def test_partial_update_booking(
-        self, 
+        self,
         booking_client: BookingClient,
         booking_data: Booking,
         auth_token: str,
@@ -254,13 +270,14 @@ class TestBookings:
             assert response_data["firstname"] == "UpdatedName"
             assert response_data["additionalneeds"] == "Extra bed"
 
-
     @allure.story("Booking deletion")
     @allure.title("Booking can be deleted successfully")
-    @allure.description("Verifies that an existing booking can be deleted using a valid authentication token and can no longer be retrieved afterward.")
+    @allure.description(
+        "Verifies that an existing booking can be deleted using a valid authentication token and can no longer be retrieved afterward."
+    )
     @pytest.mark.positive
     def test_delete_booking(
-        self, 
+        self,
         booking_client: BookingClient,
         booking_data: Booking,
         auth_token: str,
