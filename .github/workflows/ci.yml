@@ -1,0 +1,107 @@
+name: QA Automation CI (pytest + Playwright)
+
+on:
+  push:
+    branches:
+      - main
+      - master
+      - develop
+  
+  pull_request:
+    branches:
+      - main
+      - master
+      - develop
+  
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    name: Run API and UI tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+      
+      - name: Create environment file
+        run: |
+          cp .env.example .env
+      
+      - name: Build Docker image
+        run: |
+          docker compose build
+      
+      - name: Run API tests
+        run: |
+          docker compose run --rm \
+            -e CI=true \
+            -e HEADLESS=true \
+            tests \
+            pytest tests/api/ -ra \
+            --alluredir=/app/allure-results
+      
+      - name: Run UI tests
+        run: |
+          docker compose run --rm \
+            -e CI=true \
+            -e HEADLESS=true \
+            tests \
+            pytest tests/ui/ -ra \
+            --alluredir=/app/allure-results
+      
+      - name: Run full test suite
+        run: |
+          docker compose run --rm \
+            -e CI=true \
+            -e HEADLESS=true \
+            tests \
+            pytest tests/ -ra \
+            --alluredir=/app/allure-results
+      
+      - name: Upload Allure results
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v5
+        with:
+          name: allure-results
+          path: allure-results/
+          if-no-files-found: ignore
+          retention-days: 14
+      
+      - name: Upload screenshots
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v5
+        with:
+          name: screenshots
+          path: screenshots/
+          if-no-files-found: ignore
+          retention-days: 14
+      
+      - name: Upload logs
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v5
+        with:
+          name: test-logs
+          path: logs/
+          if-no-files-found: ignore
+          retention-days: 14
+      
+      - name: Upload test reports
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v5
+        with:
+          name: test-reports
+          path: |
+            test-results/
+            allure-report/
+          if-no-files-found: ignore
+          retention-days: 14
+      
+      - name: Stop Docker services
+        if: ${{ always() }}
+        run: |
+          docker compose down --volumes --remove-orphans
