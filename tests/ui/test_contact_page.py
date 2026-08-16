@@ -8,7 +8,7 @@ from pages.contact_page import ContactPage
 from pages.home_page import HomePage
 
 @allure.epic("UI Tests")
-@allure.feature("Home Page")
+@allure.feature("Contact Page")
 @pytest.mark.ui
 @pytest.mark.regression
 class TestContactPage:

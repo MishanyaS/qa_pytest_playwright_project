@@ -8,7 +8,7 @@ from pages.booking_page import BookingPage
 from pages.home_page import HomePage
 
 @allure.epic("UI Tests")
-@allure.feature("Home Page")
+@allure.feature("Booking Page")
 @pytest.mark.ui
 @pytest.mark.regression
 class TestBookingPage:
